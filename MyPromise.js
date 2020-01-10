@@ -1,3 +1,7 @@
+/**
+ * 模拟Promise
+ * 但是每次then没有返回新的promise
+ */
 const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
