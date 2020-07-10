@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build:demo1": "webpack --config demo1/webpack.config.js"
+    "build:demo1": "webpack --config demo1/webpack.config.js",
+    "build:demo2": "webpack --config demo2/webpack.config.js"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
