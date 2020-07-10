@@ -2,22 +2,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const fs = require('fs')
 const path = require('path')
 const themePath = path.resolve(__dirname, 'src/themes')
 const styleCorePath = path.join('src', 'styles', 'core.scss')
 
 const getFilename = filepath => path.parse(filepath).name
-
-// const themeEntry = () => {
-//   const files = fs.readdirSync(themePath)
-//   entries = {}
-//   files.forEach(name => {
-//     const filename = getFilename(name)
-//     entries[filename] = path.join(themePath, name)
-//   })
-//   return entries
-// }
 
 module.exports = {
   mode: 'production',
