@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>主题切换</title>
+    <style>
+      :root {
+        --primary: #17a2b8;
+        --text-color: #212529;
+        --border-color: #6c757d;
+      }
+
+      :root[data-theme='blue'] {
+        --primary: #007bff;
+        --text-color: #f8f9fa;
+      }
+
+      :root[data-theme='dark'] {
+        --primary: #343a40;
+        --text-color: #f8f9fa;
+        --border-color: #e9ecef;
+      }
+
+      body {
+        background-color: var(--primary);
+      }
+
+      .text {
+        color: var(--text-color);
+        border: 2px solid var(--border-color);
+      }
+    </style>
+  </head>
+  <body></body>
+  <script>
+    const span = document.createElement('span')
+    span.classList.add('text')
+    span.innerHTML = '文字'
+    document.body.appendChild(span)
+
+    const themeNames = ['', 'blue', 'dark']
+    const themeSwitchDiv = document.createElement('div')
+    themeNames.forEach(name => {
+      const btn = document.createElement('button')
+      btn.innerHTML = name || 'default'
+      btn.addEventListener('click', () => {
+        document.documentElement.dataset.theme = name
+      })
+      themeSwitchDiv.appendChild(btn)
+    })
+    document.body.appendChild(themeSwitchDiv)
+  </script>
+</html>
