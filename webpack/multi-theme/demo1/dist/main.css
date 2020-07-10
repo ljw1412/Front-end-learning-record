@@ -1,0 +1,6 @@
+:root[data-theme=blue] body{background-color:#007bff}:root[data-theme=blue] .text{color:#212529;border:2px solid #6c757d}
+
+:root[data-theme=dark] body{background-color:#343a40}:root[data-theme=dark] .text{color:#f8f9fa;border:2px solid #e9ecef}
+
+body{background-color:#17a2b8}.text{color:#212529;border:2px solid #6c757d}
+
