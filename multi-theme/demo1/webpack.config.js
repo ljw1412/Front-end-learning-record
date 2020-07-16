@@ -6,7 +6,7 @@ const path = require('path')
 const themePath = path.resolve(__dirname, 'src/themes')
 const styleCorePath = path.join('src', 'styles', 'core.scss')
 
-const getFilename = filepath => path.parse(filepath).name
+const getFilename = (filepath) => path.parse(filepath).name
 
 module.exports = {
   mode: 'production',
@@ -18,7 +18,7 @@ module.exports = {
     // 样式提取到 .css 文件中
     new MiniCssExtractPlugin(),
     // 创建 HTML 文件
-    new HtmlWebpackPlugin({ title: '主题风格' })
+    new HtmlWebpackPlugin({ title: '主题风格' }),
   ],
   module: {
     rules: [
@@ -36,7 +36,7 @@ module.exports = {
                 const relativePath = path.relative(rootContext, resourcePath)
                 if (relativePath.includes(path.join('src', 'themes'))) {
                   const importText = '@import "../styles/core.scss";'
-                  // 在尾部引入样式
+                  // 在尾部引入使用变量的页面样式
                   if (relativePath.includes('default.scss')) {
                     content += importText
                   } else {
@@ -45,11 +45,11 @@ module.exports = {
                   }
                 }
                 return content
-              }
-            }
-          }
-        ]
-      }
-    ]
-  }
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
 }
