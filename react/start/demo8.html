@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>列表 & Key</title>
+    <script src="../build/react.development.js"></script>
+    <script src="../build/react-dom.development.js"></script>
+    <script src="../build/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const names = ['A', 'B', 'C']
+      ReactDOM.render(
+        <div>
+          {names.map((name, index) => {
+            return <div key={index}>Hello, {name}!</div>
+          })}
+        </div>,
+        document.getElementById('root')
+      )
+    </script>
+  </body>
+</html>
