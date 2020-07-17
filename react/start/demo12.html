@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React 哲学</title>
+    <script src="../build/react.development.js"></script>
+    <script src="../build/react-dom.development.js"></script>
+    <script src="../build/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const json = [
+        {
+          category: 'Sporting Goods',
+          price: '$49.99',
+          stocked: true,
+          name: 'Football',
+        },
+        {
+          category: 'Sporting Goods',
+          price: '$9.99',
+          stocked: true,
+          name: 'Baseball',
+        },
+        {
+          category: 'Sporting Goods',
+          price: '$29.99',
+          stocked: false,
+          name: 'Basketball',
+        },
+        {
+          category: 'Electronics',
+          price: '$99.99',
+          stocked: true,
+          name: 'iPod Touch',
+        },
+        {
+          category: 'Electronics',
+          price: '$399.99',
+          stocked: false,
+          name: 'iPhone 5',
+        },
+        {
+          category: 'Electronics',
+          price: '$199.99',
+          stocked: true,
+          name: 'Nexus 7',
+        },
+      ]
+
+      function ProductRow(props) {
+        const { price, stocked, name } = props
+        return (
+          <tr className="product-row">
+            <td className={stocked ? 'stocked' : 'not-stocked'}>{name}</td>
+            <td>{price}</td>
+          </tr>
+        )
+      }
+
+      function ProductCategoryRow(props) {
+        return (
+          <tr className="product-category-row">
+            <td colSpan="2">{props.category}</td>
+          </tr>
+        )
+      }
+
+      function ProductTable(props) {
+        const { products } = props
+        console.log(products)
+        const productsMap = products.reduce((map, item) => {
+          if (!map[item.category]) map[item.category] = []
+          map[item.category].push(item)
+          return map
+        }, {})
+        return (
+          <table className="product-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(productsMap).map((category) => (
+                <React.Fragment key={category}>
+                  <ProductCategoryRow category={category} />
+                  {productsMap[category].map((item, index) => (
+                    <ProductRow key={index} {...item}></ProductRow>
+                  ))}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        )
+      }
+
+      class SearchBar extends React.Component {
+        constructor(props) {
+          super(props)
+          this.handleKeywordChange = this.handleKeywordChange.bind(this)
+          this.handleStockChange = this.handleStockChange.bind(this)
+        }
+
+        handleKeywordChange(e) {
+          this.props.onSearch(e.target.value, this.props.onlyStock)
+        }
+
+        handleStockChange(e) {
+          this.props.onSearch(this.props.keyword, e.target.checked)
+        }
+
+        render() {
+          const { keyword, onlyStock } = this.props
+          return (
+            <div className="search-bar">
+              <input
+                type="text"
+                value={keyword}
+                onChange={this.handleKeywordChange}
+              />
+              <br />
+              <input
+                type="checkbox"
+                checked={onlyStock}
+                onChange={this.handleStockChange}
+              />
+              Only show products in stock
+            </div>
+          )
+        }
+      }
+
+      class FilterableProductTable extends React.Component {
+        constructor(props) {
+          super(props)
+          this.state = { keyword: '', onlyStock: false, products: json }
+
+          this.handleSearchChange = this.handleSearchChange.bind(this)
+        }
+
+        handleSearchChange(keyword, onlyStock) {
+          const products = json.filter(
+            (item) =>
+              item.name.includes(keyword) && (!onlyStock || item.stocked)
+          )
+          this.setState({ keyword, onlyStock, products })
+        }
+
+        render() {
+          const { products, keyword, onlyStock } = this.state
+
+          return (
+            <div className="filterable-product-table">
+              <SearchBar
+                keyword={keyword}
+                onlyStock={onlyStock}
+                onSearch={this.handleSearchChange}
+              />
+              <ProductTable products={products} />
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(
+        <FilterableProductTable />,
+        document.getElementById('root')
+      )
+    </script>
+    <style>
+      .not-stocked {
+        color: red;
+      }
+
+      .product-table thead {
+        text-align: left;
+      }
+
+      .product-category-row {
+        font-weight: bold;
+      }
+    </style>
+  </body>
+</html>
