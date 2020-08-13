@@ -1,3 +1,4 @@
+// 基础
 package main
 
 import "fmt"
